@@ -1,0 +1,60 @@
+Part A:
+
+1. Why is gets unsafe, and what should you use instead for line input?
+
+    - Unsafe b/c it doesn't check for buffer size and can sometimes cause overflow. fgets limits the number of char read and should be used instead.
+
+2. Why must a fixed char buf[N] copy leave room for '\0'?
+
+    - B/c it doesn't have the null terminator so C doesn't know where the end of the string is. Not leaving room for the '\0' could cause the program to read past the buffer and access unwanted memory.
+
+3. In one sentence, what is a buffer overflow?
+
+    - A buffer overflow is when a program puts more data into a buffer than needed/ has room for causing extra data to overwrite over memory. 
+
+
+
+Part B:
+
+4. What is a dangling pointer, in one sentence?
+
+    - A dangling pointer is a pointer that still points to memory that has been freed.
+
+5. Why does setting a pointer to NULL after free help (even though it does not reclaim memory twice by itself)?
+
+    - Help prevent accidental reuse of memory that has been freed.
+
+
+
+Part B: Document the dangling-pointer mistakes
+
+    - After memory is freed, the pointer can have access to the old memory address. Trying to use that pointer is unsafe b/c the memory is no longer allocated.
+
+
+
+Part C:
+
+6. What is a regression test in one sentence, and how does your make test act like one?
+
+    - Regression test ran after code to check if it still works after changes are made, make test does this automatically by checking functions.
+
+7. Paste your grep command for dangerous APIs. Did it find anything in your tree?
+
+    - grep -nE 'gets|strcpy|sprintf' *.c *.h
+
+    - A blank output, so no matches were found.
+
+8. Why might a simple regex miss a dangerous call that a semantic tool would still catch?
+
+    - Searches for matching text, so it might miss dangerous calls. Semantic tool can help and understand text.
+
+9. If an LLM suggests using strcpy “for simplicity,” what do you do instead, and why?
+
+    - For this hw we created the safe_copy function b/c it does what strcpy does but some extra. Like checking buffer size and doesn't copy memory that is overflow from the buffer.
+
+
+
+Part C: CI/ Pre-commit:
+
+    - Pre-commits should be running a make test to check if the code that has been changed still works. Also compile the files together with gcc to see if it still runs. 
+
